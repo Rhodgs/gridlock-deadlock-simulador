@@ -1,0 +1,384 @@
+{
+  "id": "sem-deadlock",
+  "nome": "Sem deadlock",
+  "descricao": "Dois carros usam quadrantes diferentes: ninguém disputa recurso, ninguém espera.",
+  "configuracao": {
+    "modo": "normal",
+    "estrategia": "nenhuma"
+  },
+  "passos": [
+    {
+      "rodada": 0,
+      "quadrantes": [
+        {
+          "id": 1,
+          "ocupadoPor": null
+        },
+        {
+          "id": 2,
+          "ocupadoPor": null
+        },
+        {
+          "id": 3,
+          "ocupadoPor": null
+        },
+        {
+          "id": 4,
+          "ocupadoPor": null
+        }
+      ],
+      "carros": [
+        {
+          "id": "A",
+          "estado": "aguardando",
+          "rota": [
+            1,
+            2
+          ],
+          "segura": [],
+          "espera": null
+        },
+        {
+          "id": "B",
+          "estado": "aguardando",
+          "rota": [
+            3,
+            4
+          ],
+          "segura": [],
+          "espera": null
+        }
+      ],
+      "deadlock": {
+        "detectado": false,
+        "ciclo": []
+      },
+      "condicoes": {
+        "exclusaoMutua": false,
+        "posseEspera": false,
+        "naoPreempcao": false,
+        "esperaCircular": false
+      },
+      "eventos": [
+        {
+          "rodada": 0,
+          "tipo": "info",
+          "texto": "Simulação iniciada: 2 carros aguardando para entrar no cruzamento"
+        }
+      ],
+      "resultado": null,
+      "metricas": {
+        "rodada": 0,
+        "concluidos": 0,
+        "total": 2,
+        "bloqueados": 0,
+        "tempoMedioEspera": 0
+      }
+    },
+    {
+      "rodada": 1,
+      "quadrantes": [
+        {
+          "id": 1,
+          "ocupadoPor": "A"
+        },
+        {
+          "id": 2,
+          "ocupadoPor": null
+        },
+        {
+          "id": 3,
+          "ocupadoPor": "B"
+        },
+        {
+          "id": 4,
+          "ocupadoPor": null
+        }
+      ],
+      "carros": [
+        {
+          "id": "A",
+          "estado": "movimento",
+          "rota": [
+            1,
+            2
+          ],
+          "segura": [
+            1
+          ],
+          "espera": 2
+        },
+        {
+          "id": "B",
+          "estado": "movimento",
+          "rota": [
+            3,
+            4
+          ],
+          "segura": [
+            3
+          ],
+          "espera": 4
+        }
+      ],
+      "deadlock": {
+        "detectado": false,
+        "ciclo": []
+      },
+      "condicoes": {
+        "exclusaoMutua": true,
+        "posseEspera": false,
+        "naoPreempcao": false,
+        "esperaCircular": false
+      },
+      "eventos": [
+        {
+          "rodada": 0,
+          "tipo": "info",
+          "texto": "Simulação iniciada: 2 carros aguardando para entrar no cruzamento"
+        },
+        {
+          "rodada": 1,
+          "tipo": "avanco",
+          "texto": "Carro A ocupou Q1"
+        },
+        {
+          "rodada": 1,
+          "tipo": "avanco",
+          "texto": "Carro B ocupou Q3"
+        },
+        {
+          "rodada": 1,
+          "tipo": "espera",
+          "texto": "Carro A pediu Q2 (livre)"
+        },
+        {
+          "rodada": 1,
+          "tipo": "espera",
+          "texto": "Carro B pediu Q4 (livre)"
+        }
+      ],
+      "resultado": null,
+      "metricas": {
+        "rodada": 1,
+        "concluidos": 0,
+        "total": 2,
+        "bloqueados": 0,
+        "tempoMedioEspera": 0
+      }
+    },
+    {
+      "rodada": 2,
+      "quadrantes": [
+        {
+          "id": 1,
+          "ocupadoPor": null
+        },
+        {
+          "id": 2,
+          "ocupadoPor": "A"
+        },
+        {
+          "id": 3,
+          "ocupadoPor": null
+        },
+        {
+          "id": 4,
+          "ocupadoPor": "B"
+        }
+      ],
+      "carros": [
+        {
+          "id": "A",
+          "estado": "movimento",
+          "rota": [
+            1,
+            2
+          ],
+          "segura": [
+            2
+          ],
+          "espera": null
+        },
+        {
+          "id": "B",
+          "estado": "movimento",
+          "rota": [
+            3,
+            4
+          ],
+          "segura": [
+            4
+          ],
+          "espera": null
+        }
+      ],
+      "deadlock": {
+        "detectado": false,
+        "ciclo": []
+      },
+      "condicoes": {
+        "exclusaoMutua": true,
+        "posseEspera": false,
+        "naoPreempcao": false,
+        "esperaCircular": false
+      },
+      "eventos": [
+        {
+          "rodada": 0,
+          "tipo": "info",
+          "texto": "Simulação iniciada: 2 carros aguardando para entrar no cruzamento"
+        },
+        {
+          "rodada": 1,
+          "tipo": "avanco",
+          "texto": "Carro A ocupou Q1"
+        },
+        {
+          "rodada": 1,
+          "tipo": "avanco",
+          "texto": "Carro B ocupou Q3"
+        },
+        {
+          "rodada": 1,
+          "tipo": "espera",
+          "texto": "Carro A pediu Q2 (livre)"
+        },
+        {
+          "rodada": 1,
+          "tipo": "espera",
+          "texto": "Carro B pediu Q4 (livre)"
+        },
+        {
+          "rodada": 2,
+          "tipo": "avanco",
+          "texto": "Carro A ocupou Q2 e liberou Q1"
+        },
+        {
+          "rodada": 2,
+          "tipo": "avanco",
+          "texto": "Carro B ocupou Q4 e liberou Q3"
+        }
+      ],
+      "resultado": null,
+      "metricas": {
+        "rodada": 2,
+        "concluidos": 0,
+        "total": 2,
+        "bloqueados": 0,
+        "tempoMedioEspera": 0
+      }
+    },
+    {
+      "rodada": 3,
+      "quadrantes": [
+        {
+          "id": 1,
+          "ocupadoPor": null
+        },
+        {
+          "id": 2,
+          "ocupadoPor": null
+        },
+        {
+          "id": 3,
+          "ocupadoPor": null
+        },
+        {
+          "id": 4,
+          "ocupadoPor": null
+        }
+      ],
+      "carros": [
+        {
+          "id": "A",
+          "estado": "concluido",
+          "rota": [
+            1,
+            2
+          ],
+          "segura": [],
+          "espera": null
+        },
+        {
+          "id": "B",
+          "estado": "concluido",
+          "rota": [
+            3,
+            4
+          ],
+          "segura": [],
+          "espera": null
+        }
+      ],
+      "deadlock": {
+        "detectado": false,
+        "ciclo": []
+      },
+      "condicoes": {
+        "exclusaoMutua": false,
+        "posseEspera": false,
+        "naoPreempcao": false,
+        "esperaCircular": false
+      },
+      "eventos": [
+        {
+          "rodada": 0,
+          "tipo": "info",
+          "texto": "Simulação iniciada: 2 carros aguardando para entrar no cruzamento"
+        },
+        {
+          "rodada": 1,
+          "tipo": "avanco",
+          "texto": "Carro A ocupou Q1"
+        },
+        {
+          "rodada": 1,
+          "tipo": "avanco",
+          "texto": "Carro B ocupou Q3"
+        },
+        {
+          "rodada": 1,
+          "tipo": "espera",
+          "texto": "Carro A pediu Q2 (livre)"
+        },
+        {
+          "rodada": 1,
+          "tipo": "espera",
+          "texto": "Carro B pediu Q4 (livre)"
+        },
+        {
+          "rodada": 2,
+          "tipo": "avanco",
+          "texto": "Carro A ocupou Q2 e liberou Q1"
+        },
+        {
+          "rodada": 2,
+          "tipo": "avanco",
+          "texto": "Carro B ocupou Q4 e liberou Q3"
+        },
+        {
+          "rodada": 3,
+          "tipo": "avanco",
+          "texto": "Carro A concluiu"
+        },
+        {
+          "rodada": 3,
+          "tipo": "avanco",
+          "texto": "Carro B concluiu"
+        }
+      ],
+      "resultado": {
+        "tipo": "sem-deadlock",
+        "mensagem": "Simulação concluída sem deadlock"
+      },
+      "metricas": {
+        "rodada": 3,
+        "concluidos": 2,
+        "total": 2,
+        "bloqueados": 0,
+        "tempoMedioEspera": 0
+      }
+    }
+  ]
+}
