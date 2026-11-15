@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gridlock — simulador de deadlock</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../packages/ui/ui.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topo">
+      <div>
+        <h1>GRIDLOCK</h1>
+        <p>Simulador de deadlock · Sistemas Operacionais · Grupo 8</p>
+      </div>
+      <div class="topo-direita">
+        <span id="indicador" class="indicador" role="status"><i></i><b>Parado</b></span>
+        <label class="alternador"><input type="checkbox" id="animacoes" checked /> Animações</label>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside id="config"></aside>
+      <section class="palco" aria-label="Cruzamento">
+        <div id="palco"></div>
+      </section>
+      <aside id="lateral" class="lateral"></aside>
+    </main>
+
+    <section class="rodape">
+      <div id="barra"></div>
+      <div id="banner"></div>
+      <div id="log"></div>
+    </section>
+
+    <noscript>Este simulador precisa de JavaScript.</noscript>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
