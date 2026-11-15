@@ -1,0 +1,13 @@
+{
+  "name": "gridlock-deadlock-simulador",
+  "version": "0.1.0",
+  "description": "Simulador visual de deadlock com analogia de cruzamento - Sistemas Operacionais (UFAM/ICET)",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "start": "npx --yes serve . -l 5173",
+    "mocks": "node tools/gerar-mocks.mjs",
+    "validar": "node tools/validar-mocks.mjs"
+  }
+}
