@@ -1,11 +1,12 @@
-// Página principal: junta a interface (packages/ui) com uma fonte de estados.
+// Página principal: junta a interface (packages/ui) com uma fonte de estados
 // Hoje a fonte são os MOCKS (mocks/*.json). Quando o backend estiver pronto, troque
-// `carregarCenario` por chamadas a criarSimulacao() de packages/core (veja CONTRATO.md).
+// `carregarCenario` por chamadas a criarSimulacao() de packages/core (veja CONTRATO.md)
 
 import {
   criarBanner, criarBarraControle, criarCruzamento, criarGrafoEspera, criarLegenda,
   criarLog, criarPainelCondicoes, criarPainelConfiguracao, criarPainelEstado,
 } from '../packages/ui/src/index.js';
+import { animarCarros, limparPoses } from './animacao.js';
 
 const CENARIOS = [
   { id: 'deadlock-classico', nome: 'Deadlock clássico', arquivo: '../mocks/deadlock-classico.json' },
@@ -28,7 +29,7 @@ const barra = criarBarraControle({
 });
 $('barra').append(barra.elemento);
 
-// ------------------------------------------------------------------ controle
+// controle
 const atual = () => app.sequencia[app.indice];
 const naoTerminou = () => app.indice < app.sequencia.length - 1;
 
@@ -76,6 +77,7 @@ async function carregarCenario(id) {
     return;
   }
   app.cenarioId = id;
+  limparPoses();
   app.sequencia = [...app.mock.passos];
   app.indice = 0;
   app.modo = app.mock.configuracao?.modo ?? 'normal';
@@ -96,6 +98,7 @@ function renderizar() {
     onEstrategia: (v) => { app.estrategia = v; },
   }));
   $('palco').replaceChildren(criarCruzamento(estado), criarLegenda());
+  animarCarros($('palco'), (INTERVALO_BASE_MS / app.velocidade) * 0.7);
   $('lateral').replaceChildren(criarPainelEstado(estado), criarGrafoEspera(estado), criarPainelCondicoes(estado.condicoes));
   $('banner').replaceChildren(criarBanner(estado));
   $('log').replaceChildren(criarLog(estado.eventos));

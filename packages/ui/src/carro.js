@@ -44,7 +44,7 @@ export function criarCarro({ id, cor, estado = 'movimento', x = 0, y = 0, direca
 
   return svg(
     'g',
-    { class: `carro estado-${estado}`, transform: `translate(${x} ${y})`, 'data-carro': id },
+    { class: `carro estado-${estado}`, transform: `translate(${x} ${y}) rotate(${GRAUS[direcao] ?? 0})`, 'data-carro': id },
     svg('title', null, descricao ?? `Carro ${id}: ${ROTULO_ESTADO[estado] ?? estado}`),
     svg('g', { class: 'carro-anim' }, corpo, letra, selo),
   );

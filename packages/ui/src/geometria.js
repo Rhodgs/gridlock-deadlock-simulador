@@ -1,27 +1,28 @@
-// Coordenadas do cruzamento (viewBox 600 x 600). Quadrantes: Q1 sup. esq., Q2 sup. dir.,
+// Coordenadas do cruzamento (viewBox 1200 x 700). Quadrantes: Q1 sup. esq., Q2 sup. dir.,
 // Q3 inf. dir., Q4 inf. esq. (sentido horário, igual ao CONTRATO.md).
 
-export const VIEW = 600;
+export const VIEW = 1200;
+export const VIEW_HEIGHT = 700;
 
 export const CENTRO = {
-  1: { x: 250, y: 250 },
-  2: { x: 350, y: 250 },
-  3: { x: 350, y: 350 },
-  4: { x: 250, y: 350 },
+  1: { x: 550, y: 300 },
+  2: { x: 650, y: 300 },
+  3: { x: 650, y: 400 },
+  4: { x: 550, y: 400 },
 };
 
 // Onde o carro espera antes de entrar no quadrante e para onde ele vai ao sair.
 export const ENTRADA = {
-  1: { x: 250, y: 95, direcao: 'S' },
-  2: { x: 505, y: 250, direcao: 'O' },
-  3: { x: 350, y: 505, direcao: 'N' },
-  4: { x: 95, y: 350, direcao: 'L' },
+  1: { x: 550, y: 115, direcao: 'S' },
+  2: { x: 1085, y: 350, direcao: 'O' },
+  3: { x: 650, y: 585, direcao: 'N' },
+  4: { x: 115, y: 350, direcao: 'L' },
 };
 export const SAIDA = {
-  1: { x: 95, y: 250, direcao: 'O' },
-  2: { x: 350, y: 95, direcao: 'N' },
-  3: { x: 505, y: 350, direcao: 'L' },
-  4: { x: 250, y: 505, direcao: 'S' },
+  1: { x: 115, y: 350, direcao: 'O' },
+  2: { x: 650, y: 115, direcao: 'N' },
+  3: { x: 1085, y: 350, direcao: 'L' },
+  4: { x: 550, y: 585, direcao: 'S' },
 };
 
 export function direcaoEntre(a, b) {

@@ -122,4 +122,3 @@ select { font: 600 .9rem var(--corpo); padding: .35rem .4rem; border: 2px solid 
 
 /* ---------- acessibilidade ---------- */
 .sem-animacao *, .sem-animacao *::before, .sem-animacao *::after { animation: none !important; transition: none !important; }
-@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }

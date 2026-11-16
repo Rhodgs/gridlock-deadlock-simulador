@@ -1,6 +1,6 @@
 import { svg } from './dom.js';
 import { paletaDoCarro, ROTULO_ESTADO } from './cores.js';
-import { CENTRO, VIEW, posicaoDoCarro } from './geometria.js';
+import { CENTRO, VIEW, VIEW_HEIGHT, posicaoDoCarro } from './geometria.js';
 import { criarCarro } from './carro.js';
 import { criarDefsSetas, criarSetas } from './setas.js';
 
@@ -42,12 +42,18 @@ export function criarCruzamento(estado) {
 
   return svg(
     'svg',
-    { class: 'cruzamento', viewBox: `0 0 ${VIEW} ${VIEW}`, role: 'img', 'aria-label': `Cruzamento na rodada ${estado.rodada}` },
+    {
+      class: 'cruzamento',
+      viewBox: `0 0 ${VIEW} ${VIEW_HEIGHT}`,
+      preserveAspectRatio: 'xMidYMid meet',
+      role: 'img',
+      'aria-label': `Cruzamento na rodada ${estado.rodada}`,
+    },
     criarDefsSetas(),
-    svg('rect', { class: 'grama', x: 0, y: 0, width: VIEW, height: VIEW }),
-    svg('rect', { class: 'asfalto', x: 200, y: 0, width: 200, height: VIEW }),
-    svg('rect', { class: 'asfalto', x: 0, y: 200, width: VIEW, height: 200 }),
-    svg('path', { class: 'faixa', d: 'M300 0 V200 M300 400 V600 M0 300 H200 M400 300 H600' }),
+    svg('rect', { class: 'grama', x: 0, y: 0, width: VIEW, height: VIEW_HEIGHT }),
+    svg('rect', { class: 'asfalto', x: 500, y: 0, width: 200, height: VIEW_HEIGHT }),
+    svg('rect', { class: 'asfalto', x: 0, y: 250, width: VIEW, height: 200 }),
+    svg('path', { class: 'faixa', d: 'M600 0 V250 M600 450 V700 M0 350 H500 M700 350 H1200' }),
     svg('g', { class: 'quadrantes' }, ...quadrantes),
     criarSetas(estado),
     svg('g', { class: 'carros' }, ...carrosSvg),

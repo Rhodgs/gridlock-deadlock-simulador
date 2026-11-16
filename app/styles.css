@@ -1,6 +1,7 @@
 /* Layout da página. O visual dos componentes está em packages/ui/ui.css. */
 * { box-sizing: border-box; }
-body { margin: 0; min-height: 100vh; background: var(--mesa); color: var(--tinta); font: 400 1rem/1.4 var(--corpo);
+:root { --dur-anim: 600ms; }
+body { background: var(--mesa); color: var(--tinta); font: 400 1rem/1.4 var(--corpo);
   background-image: radial-gradient(rgba(20, 33, 61, .16) 1.2px, transparent 1.4px); background-size: 14px 14px; }
 
 .topo { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem .6rem; }
@@ -14,15 +15,8 @@ body { margin: 0; min-height: 100vh; background: var(--mesa); color: var(--tinta
 .indicador[data-estado='deadlock'] i { background: var(--vermelho); }
 .indicador[data-estado='ok'] i { background: var(--verde); }
 
-.layout { display: grid; grid-template-columns: 260px minmax(0, 1fr) 320px; gap: 1.1rem; align-items: start; padding: .5rem 1.25rem 1rem; }
 .palco { min-width: 0; }
 .lateral { display: grid; gap: 1.1rem; }
 #config { position: sticky; top: .75rem; }
 
-.rodape { display: grid; gap: 1rem; padding: 0 1.25rem 2rem; max-width: 1500px; }
 .erro { margin: 1rem; padding: 1rem; background: #fee2e2; border: var(--borda); font-weight: 600; }
-
-@media (max-width: 1100px) {
-  .layout { grid-template-columns: 1fr; }
-  #config { position: static; }
-}
