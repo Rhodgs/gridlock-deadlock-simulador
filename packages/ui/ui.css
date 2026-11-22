@@ -85,12 +85,13 @@
 .velocidade, .campo { display: inline-flex; align-items: center; gap: .4rem; font-size: .85rem; font-weight: 700; }
 .campo { display: grid; gap: .25rem; }
 select { font: 600 .9rem var(--corpo); padding: .35rem .4rem; border: 2px solid var(--tinta); background: #fff; }
+.campo select { width: 100%; min-width: 0; }
 
 /* ---------- configuração ---------- */
 .cenarios { display: grid; gap: .5rem; }
 .btn.cenario { text-align: left; }
 .btn.cenario.ativo { background: var(--tinta); color: #fff; }
-.nota { margin: 0; font-size: .78rem; color: var(--suave); }
+.nota { margin: 0; font-size: .78rem; color: var(--suave); overflow-wrap: anywhere; }
 
 /* ---------- log e banner ---------- */
 .janela-log .janela-corpo { padding: 0; }
