@@ -8,6 +8,7 @@
   "scripts": {
     "start": "npx --yes serve . -l 5173",
     "test": "node tools/testar-core.mjs",
+    "comparar": "node tools/comparar-estrategias.mjs",
     "mocks": "node tools/gerar-mocks.mjs",
     "validar": "node tools/validar-mocks.mjs"
   }
