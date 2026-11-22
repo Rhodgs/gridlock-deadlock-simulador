@@ -17,7 +17,10 @@ export function criarPainelCondicoes(condicoes) {
     ...ITENS.map(([chave, nome, explicacao]) =>
       el(
         'li',
-        { class: `condicao${condicoes[chave] ? ' ativa' : ''}` },
+        {
+          class: `condicao${condicoes[chave] ? ' ativa' : ''}`,
+          title: `${nome}: ${explicacao} — ${condicoes[chave] ? 'presente' : 'ausente'}`,
+        },
         el('span', { class: 'condicao-marca', 'aria-hidden': 'true' }, condicoes[chave] ? '✔' : '○'),
         el('span', null, el('strong', null, nome), el('small', null, explicacao)),
         el('span', { class: 'sr-only' }, condicoes[chave] ? 'presente' : 'ausente'),
@@ -27,5 +30,5 @@ export function criarPainelCondicoes(condicoes) {
   return criarJanela('4 condições do deadlock', [
     lista,
     todas ? el('p', { class: 'condicoes-aviso' }, 'As quatro juntas: deadlock!') : null,
-  ]);
+  ], { classe: 'janela-condicoes', recolhivel: true });
 }

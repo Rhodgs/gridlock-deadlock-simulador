@@ -77,5 +77,5 @@ export function criarGrafoEspera(estado) {
     ? el('p', { class: 'grafo-legenda alerta' }, `Ciclo: ${[...ciclo, ciclo[0]].join(' → ')}`)
     : el('p', { class: 'grafo-legenda' }, arestas.length ? 'Há espera, mas sem ciclo.' : 'Ninguém espera ninguém.');
 
-  return criarJanela('Grafo de espera', [desenho, legenda]);
+  return criarJanela('Grafo de espera', [desenho, legenda], { classe: 'janela-grafo', recolhivel: true });
 }

@@ -24,6 +24,9 @@
 .janela-botoes i:nth-child(2) { background: #fff; }
 .janela-botoes i:nth-child(3) { background: var(--janela); }
 .janela-corpo { padding: .7rem; display: grid; gap: .8rem; }
+details.janela > summary { list-style: none; cursor: pointer; }
+details.janela > summary::-webkit-details-marker { display: none; }
+details.janela > summary::marker { content: ''; }
 
 /* ---------- cruzamento ---------- */
 .cruzamento { display: block; width: 100%; height: auto; border: var(--borda); background: #86b36b; }
@@ -55,9 +58,21 @@
 .tabela th { font-size: .72rem; color: var(--suave); }
 .linha-bloqueada td { background: #ffedd5; }
 .chip { display: inline-grid; place-items: center; width: 1.5rem; height: 1.5rem; border: 2px solid; font-weight: 800; color: #fff; text-shadow: 0 0 2px #000; }
+ .janela-estado .janela-corpo { padding: .25rem .35rem; gap: .2rem; }
+ .janela-estado .metricas { grid-template-columns: repeat(4, 1fr); gap: .18rem; }
+ .janela-estado .metrica { padding: .08rem .18rem; }
+ .janela-estado .metrica dt { font-size: .625rem; line-height: 1.1; }
+ .janela-estado .metrica dd { font-size: .875rem; line-height: 1.1; }
+ .janela-estado .tabela { font-size: .6875rem; }
+ .janela-estado .tabela th { font-size: .625rem; }
+ .janela-estado .tabela th, .janela-estado .tabela td { padding: .05rem .18rem; line-height: 1.2; }
+ .janela-estado .chip { width: 1rem; height: 1rem; }
 
 /* ---------- grafo e condições ---------- */
 .grafo { width: 100%; max-width: 240px; height: auto; margin: 0 auto; display: block; }
+.janela-grafo .grafo { min-height: 140px; max-width: 160px; height: 140px; }
+.janela-grafo .janela-corpo { padding: .25rem .7rem; gap: .15rem; }
+.janela-grafo .grafo-legenda { font-size: .78rem; line-height: 1.1; }
 .no-letra { font: 800 15px var(--corpo); paint-order: stroke; }
 .aresta.ciclo { stroke-dasharray: 6 4; animation: fluxo 1s linear infinite; }
 .grafo-legenda { margin: 0; text-align: center; font-size: .85rem; color: var(--suave); }
@@ -68,6 +83,11 @@
 .condicao.ativa { border-color: var(--vermelho); background: #fee2e2; color: var(--tinta); }
 .condicao-marca { font-weight: 800; }
 .condicoes-aviso { margin: 0; padding: .4rem; background: var(--vermelho); color: #fff; font: 400 1.1rem var(--titulo); text-align: center; letter-spacing: .03em; }
+.janela-condicoes .janela-corpo { padding: .2rem .7rem; gap: .2rem; }
+.janela-condicoes .condicoes { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .14rem; }
+.janela-condicoes .condicao { grid-template-columns: 1.1rem 1fr; padding: .08rem .35rem; line-height: 1.15; min-width: 0; }
+.janela-condicoes .condicao strong { display: block; font-size: .75rem; line-height: 1.1; }
+.janela-condicoes .condicao small { display: block; font-size: .625rem; line-height: 1.1; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* ---------- controles ---------- */

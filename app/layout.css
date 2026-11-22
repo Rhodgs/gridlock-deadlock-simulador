@@ -4,7 +4,7 @@
 :root {
     --col-esq: 260px;
     --col-dir: 340px;
-    --rodape-h: 240px;
+    --rodape-h: 170px;
     --divisor: 8px;
 }
 
@@ -45,7 +45,7 @@ body {
 #lateral {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
     contain: layout paint;
 }
 
@@ -103,9 +103,23 @@ body {
 #banner {
     grid-column: 1;
     grid-row: 2;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     min-width: 0;
     min-height: 0;
     overflow: auto;
+}
+
+#banner>.banner {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 #log {

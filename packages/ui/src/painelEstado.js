@@ -58,5 +58,10 @@ export function criarPainelEstado(estado) {
     ),
   );
 
-  return criarJanela('Estado', [metricas, carros, quadrantes], { classe: 'janela-estado' });
+  const abrirPorPadrao = !window.matchMedia('(max-height: 800px)').matches;
+  return criarJanela('Estado', [metricas, carros, quadrantes], {
+    classe: 'janela-estado',
+    recolhivel: true,
+    aberto: abrirPorPadrao,
+  });
 }
