@@ -65,16 +65,23 @@ python3 -m http.server 5173
 | evitação | só atende o pedido se o estado resultante for seguro | (evita chegar ao ciclo) |
 | recuperação | detecta o ciclo e faz um carro (vítima) recuar | (corrige depois) |
 
+## Animação
+
+Os carros dirigem entre os quadrantes com trajetória suave: curvas acompanham a direção do movimento,
+rotacionam ao entrar e sair do cruzamento e dão ré suavemente na recuperação. O checkbox
+**Animações** desliga o movimento dos carros e animações visuais opcionais.
+
 ## Status
 
 - [x] Contrato do estado
 - [x] Mocks (referência do contrato)
 - [x] Interface (cruzamento, painéis, controles, log)
+- [x] Animação dos carros entre quadrantes
 - [x] Backend: motor de rodadas, detecção por grafo de espera, voltar
 - [x] Estratégias: prevenção, evitação e recuperação
 - [x] Integração `app` ↔ `core` e testes automáticos
-- [ ] Cenário personalizado (formulário)
-- [ ] Animação dos carros, semáforos, modo comparação
+- [ ] Cenário personalizado (formulário — botão marcado como "em breve")
+- [ ] Semáforos e modo comparação
 - [ ] Avaliação com métricas por estratégia e relatório da 2ª etapa
 
 Veja [`CONTRIBUINDO.md`](CONTRIBUINDO.md) para branches, commits e divisão de tarefas.
