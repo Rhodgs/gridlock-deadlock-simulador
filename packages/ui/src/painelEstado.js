@@ -36,7 +36,7 @@ export function criarPainelEstado(estado) {
           'tr',
           { class: c.estado === 'bloqueado' ? 'linha-bloqueada' : '' },
           el('td', null, chip(c.id, c.cor)),
-          el('td', null, ROTULO_ESTADO[c.estado]),
+          el('td', null, ROTULO_ESTADO[c.estado] + (c.motivo === 'negado' ? ' (negado)' : '')),
           el('td', null, listaQ(c.segura)),
           el('td', null, c.espera === null ? '—' : 'Q' + c.espera),
         ),

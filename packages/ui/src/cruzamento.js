@@ -7,7 +7,7 @@ import { criarDefsSetas, criarSetas } from './setas.js';
 function descricaoDoCarro(c) {
   const partes = [`Carro ${c.id}: ${ROTULO_ESTADO[c.estado]}`];
   if (c.segura.length) partes.push(`segura ${c.segura.map((q) => 'Q' + q).join(', ')}`);
-  if (c.espera !== null) partes.push(`pede Q${c.espera}`);
+  if (c.espera !== null) partes.push(`pede Q${c.espera}${c.motivo === 'negado' ? ' (negado)' : ''}`);
   return partes.join(' · ');
 }
 

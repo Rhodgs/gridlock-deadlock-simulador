@@ -36,7 +36,7 @@ export function direcaoEntre(a, b) {
 export function alvoDoCarro(carro) {
   if (carro.espera !== null && carro.espera !== undefined) return carro.espera;
   if (carro.estado === 'concluido') return null;
-  const atual = carro.segura.at(-1);
+  const atual = carro.segura[0];
   if (atual === undefined) return carro.rota[0] ?? null;
   const i = carro.rota.indexOf(atual);
   return i >= 0 ? (carro.rota[i + 1] ?? null) : null;
@@ -48,7 +48,7 @@ export function posicaoDoCarro(carro) {
     const s = SAIDA[carro.rota.at(-1)];
     return { x: s.x, y: s.y, direcao: s.direcao };
   }
-  const atual = carro.segura.at(-1);
+  const atual = carro.segura[0]; // o primeiro quadrante é onde o carro está (os demais são reservas)
   if (atual === undefined) {
     const e = ENTRADA[carro.rota[0]];
     return { x: e.x, y: e.y, direcao: e.direcao };

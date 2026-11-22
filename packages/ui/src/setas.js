@@ -18,7 +18,7 @@ export function criarDefsSetas() {
 
 /**
  * Uma seta tracejada do carro até o quadrante que ele pediu.
- * Verde = quadrante livre (carro vai avançar). Vermelha = ocupado (carro espera).
+ * Verde = pedido será concedido (carro vai avançar). Vermelha = carro bloqueado (espera).
  * Quando o carro faz parte do ciclo de deadlock, a seta ganha a classe "ciclo" (anima).
  */
 export function criarSetas(estado) {
@@ -27,8 +27,8 @@ export function criarSetas(estado) {
 
   for (const carro of estado.carros) {
     if (carro.espera === null || carro.estado === 'concluido') continue;
-    const dono = estado.quadrantes[carro.espera - 1]?.ocupadoPor ?? null;
-    const ocupado = dono !== null && dono !== carro.id;
+    // vermelha = o carro continua parado (quadrante ocupado ou pedido negado)
+    const ocupado = carro.estado === 'bloqueado';
 
     const origem = posicaoDoCarro(carro);
     const destino = CENTRO[carro.espera];
