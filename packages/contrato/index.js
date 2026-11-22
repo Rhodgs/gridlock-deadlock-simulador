@@ -4,6 +4,7 @@
 export const ESTADOS_CARRO = ['aguardando', 'movimento', 'bloqueado', 'concluido'];
 export const TIPOS_EVENTO = ['info', 'avanco', 'espera', 'bloqueio', 'deadlock', 'recuperacao'];
 export const TIPOS_RESULTADO = ['sem-deadlock', 'deadlock', 'recuperado'];
+export const MOTIVOS = ['ocupado', 'negado'];
 export const CONDICOES = ['exclusaoMutua', 'posseEspera', 'naoPreempcao', 'esperaCircular'];
 export const MODOS = ['normal', 'com-bloqueio'];
 export const ESTRATEGIAS = ['nenhuma', 'prevencao', 'evitacao', 'recuperacao'];
@@ -68,10 +69,14 @@ export function validarEstado(e) {
       }
     }
     for (const c of e.carros) {
+      if (c.motivo !== undefined && !MOTIVOS.includes(c.motivo)) err(`carro ${c.id}: motivo inválido "${c.motivo}"`);
       if (c.estado === 'bloqueado') {
         const dono = e.quadrantes[c.espera - 1]?.ocupadoPor;
-        if (c.espera === null || !dono || dono === c.id) {
-          err(`carro ${c.id} está bloqueado, mas não espera um quadrante ocupado por outro carro`);
+        const ocupadoPorOutro = c.espera !== null && dono && dono !== c.id;
+        if (c.motivo === 'negado') {
+          if (c.espera === null) err(`carro ${c.id}: pedido negado precisa de espera`);
+        } else if (!ocupadoPorOutro) {
+          err(`carro ${c.id} está bloqueado, mas não espera um quadrante ocupado por outro carro (ou motivo "negado")`);
         }
       }
     }
