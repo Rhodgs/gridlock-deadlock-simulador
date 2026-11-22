@@ -1,24 +1,46 @@
-// Backend da simulação. Ainda NÃO implementado: este arquivo só fixa a assinatura.
-// Contrato completo em CONTRATO.md. Valide sua saída com validarEstado().
+// Backend da simulação: devolve estados no formato do CONTRATO.md.
+// Este pacote não importa nada de packages/ui e nunca mexe em tela.
 
-// import { validarEstado } from '../../contrato/index.js';
-// import { construirGrafoEspera, encontrarCiclo } from './deteccao.js';
+import { normalizarConfig } from './config.js';
+import { avancar, criarInterno, LIMITE_RODADAS, paraEstado, todosConcluidos } from './motor.js';
+
+export { CENARIOS } from './cenarios.js';
 
 /**
- * @param {{ carros: {id: string, rota: number[]}[],
- *           modo: 'normal' | 'com-bloqueio',
- *           estrategia: 'nenhuma' | 'prevencao' | 'evitacao' | 'recuperacao' }} config
+ * @param {{ carros: {id: string, rota: number[], chegada?: number, cor?: string}[],
+ *           modo?: 'normal' | 'com-bloqueio',
+ *           estrategia?: 'nenhuma' | 'prevencao' | 'evitacao' | 'recuperacao' }} config
  */
 export function criarSimulacao(config) {
-  void config;
+  const cfg = normalizarConfig(config);
+  let interno = criarInterno(cfg);
+  let pilha = []; // cópias anteriores, para voltar()
+
+  const empilhar = () => pilha.push(structuredClone(interno));
+  const estado = () => paraEstado(interno);
+
+  function finalizado() {
+    return todosConcluidos(interno) || interno.ciclo.length > 0 || interno.rodada >= LIMITE_RODADAS;
+  }
+
   return {
-    /** Estado atual no formato do contrato. */
-    estado() { throw new Error('TODO: estado'); },
-    /** Avança uma rodada e devolve o novo estado. */
-    passo() { throw new Error('TODO: passo'); },
-    /** Volta à rodada 0 com a mesma configuração. */
-    reiniciar() { throw new Error('TODO: reiniciar'); },
-    /** Aplica a recuperação quando há deadlock e devolve o estado. */
-    resolver() { throw new Error('TODO: resolver'); },
+    estado,
+    passo() {
+      if (finalizado()) return estado();
+      empilhar();
+      avancar(interno);
+      return estado();
+    },
+    voltar() {
+      if (pilha.length) interno = pilha.pop();
+      return estado();
+    },
+    reiniciar() {
+      interno = criarInterno(cfg);
+      pilha = [];
+      return estado();
+    },
+    finalizado,
+    podeVoltar: () => pilha.length > 0,
   };
 }
