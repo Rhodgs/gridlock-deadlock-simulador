@@ -41,22 +41,36 @@ details.janela > summary::-webkit-details-marker { display: none; }
 details.janela > summary::marker { content: ''; }
 
 /* ---------- cruzamento ---------- */
-.cruzamento { display: block; width: 100%; height: auto; border: var(--borda); background: #86b36b; }
+.cruzamento { display: block; width: 100%; height: auto; border: var(--borda); background: #86b36b; overflow: hidden; }
 .grama { fill: #86b36b; }
+.grama-base { fill: #86b36b; }
+.grama-tonalidade { fill: #91bd75; opacity: .28; }
+.grama-direita { fill: #7da968; opacity: .18; }
 .asfalto { fill: #4b5563; }
 .faixa { fill: none; stroke: #e5e7eb; stroke-width: 3; stroke-dasharray: 14 12; }
-.quadrante rect { stroke: var(--tinta); stroke-width: 2; }
+.meio-fio { fill: none; stroke: #d1d5db; stroke-width: 7; opacity: .9; }
+.linha-central { fill: none; stroke: #f4e7a1; stroke-width: 4; stroke-dasharray: 18 14; opacity: .85; }
+.faixa-pedestres rect { fill: #f8fafc; opacity: .92; }
+.linha-retencao { stroke: #fff; stroke-width: 5; opacity: .95; }
+.arvores .arbusto circle { fill: #557c4a; stroke: #668f58; stroke-width: 2; opacity: .82; }
+.quadrante rect { stroke: none; }
 .quadrante.livre rect { fill: #d1d5db; fill-opacity: .55; }
-.rotulo-q { font: 700 13px var(--corpo); fill: var(--tinta); opacity: .75; }
+.quadrante.ocupado rect { filter: drop-shadow(0 0 5px rgba(20, 33, 61, .55)); stroke-width: 3; }
+.cruzamento-contorno rect { fill: none; stroke: var(--tinta); stroke-width: 3; }
+.cruzamento-contorno line { stroke: var(--tinta); stroke-width: 1.5; opacity: .9; }
+.rotulo-q { font: 700 19.5px var(--corpo); fill: var(--tinta); opacity: .82; paint-order: stroke; stroke: rgba(255,255,255,.35); stroke-width: 1; }
 .quadrante.deadlock rect { stroke: var(--vermelho); stroke-width: 6; animation: pulso 1s ease-in-out infinite; }
 @keyframes pulso { 50% { stroke-opacity: .25; } }
 
 .carro-letra { font: 800 21px var(--corpo); paint-order: stroke; }
+.luzes-freio { display: none; fill: #ef4444; stroke: #7f1d1d; stroke-width: 1; }
+.carro.estado-bloqueado .luzes-freio { display: block; }
+.carro-sombra { pointer-events: none; }
 .carro.estado-aguardando .carro-chassi { stroke-dasharray: 5 3; }
 .carro.estado-bloqueado .carro-chassi { stroke: var(--laranja); stroke-width: 4; }
 .carro.estado-bloqueado .carro-anim { animation: tremer .4s linear infinite; }
-.carro.estado-concluido { opacity: .35; }
-@keyframes tremer { 25% { transform: translateX(-1.5px); } 75% { transform: translateX(1.5px); } }
+.carro.estado-concluido { opacity: .75; }
+@keyframes tremer { 25% { transform: translateX(-1.5px) scale(1.15); } 75% { transform: translateX(1.5px) scale(1.15); } }
 .seta.ciclo { stroke-width: 5; animation: fluxo 1s linear infinite; }
 @keyframes fluxo { to { stroke-dashoffset: -24; } }
 
@@ -143,7 +157,7 @@ select { font: 600 .9rem var(--corpo); padding: .35rem .4rem; border: 2px solid 
 .banner-recuperado { background: #bfdbfe; }
 
 /* ---------- legenda ---------- */
-.legenda { list-style: none; margin: .7rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem 1rem; font-size: .8rem; }
+.legenda { list-style: none; flex: 0 0 auto; position: relative; z-index: 2; margin: 0; padding: .35rem .5rem; background: var(--mesa); display: flex; flex-wrap: wrap; gap: .4rem 1rem; font-size: .8rem; }
 .legenda li { display: inline-flex; align-items: center; gap: .35rem; }
 .amostra { display: inline-block; width: 1.1rem; height: .8rem; border: 2px solid var(--tinta); }
 .amostra-livre { background: #d1d5db; }

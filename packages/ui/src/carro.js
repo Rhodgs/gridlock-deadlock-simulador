@@ -43,12 +43,19 @@ export function criarCarro({ id, cor, estado = 'movimento', x = 0, y = 0, direca
   );
 
   const selo = criarSelo(estado, contraRotacao);
+  const sombra = svg('ellipse', { class: 'carro-sombra', cx: 0, cy: 8, rx: 24, ry: 34, fill: '#14213d', opacity: 0.22 });
+  const luzesFreio = svg(
+    'g',
+    { class: 'luzes-freio' },
+    svg('rect', { x: -14, y: 27, width: 8, height: 5, rx: 2 }),
+    svg('rect', { x: 6, y: 27, width: 8, height: 5, rx: 2 }),
+  );
 
   return svg(
     'g',
     { class: `carro estado-${estado}`, transform: `translate(${x} ${y}) rotate(${direcaoGraus})`, 'data-carro': id },
     svg('title', null, descricao ?? `Carro ${id}: ${ROTULO_ESTADO[estado] ?? estado}`),
-    svg('g', { class: 'carro-anim' }, corpo, letra, selo),
+    svg('g', { class: 'carro-anim', transform: 'scale(1.15)' }, sombra, corpo, luzesFreio, letra, selo),
   );
 }
 
