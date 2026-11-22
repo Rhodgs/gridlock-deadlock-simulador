@@ -130,6 +130,50 @@ teste('configurações inválidas lançam erro claro', () => {
   assert.throws(() => criarSimulacao({ carros: [{ id: 'A', rota: [5] }] }), /1 a 4/);
 });
 
+teste('cenário personalizado idêntico ao clássico gera o mesmo deadlock', () => {
+  const personalizado = {
+    carros: [
+      { id: 'A', rota: [1, 2] },
+      { id: 'D', rota: [2, 3] },
+      { id: 'B', rota: [3, 4] },
+      { id: 'C', rota: [4, 1] },
+    ],
+    modo: 'com-bloqueio',
+    estrategia: 'nenhuma',
+  };
+  const estado = criarSimulacao(personalizado).passo();
+  assert.equal(estado.rodada, 1);
+  assert.deepEqual(estado.deadlock.ciclo, ['A', 'D', 'B', 'C']);
+});
+
+teste('personalizado rejeita quadrantes diagonais pela configuração do core', () => {
+  assert.throws(
+    () => criarSimulacao({ carros: [{ id: 'A', rota: [1, 3] }], modo: 'com-bloqueio', estrategia: 'nenhuma' }),
+    /não são vizinhos/,
+  );
+});
+
+teste('personalizado rejeita dois carros no mesmo quadrante inicial', () => {
+  assert.throws(
+    () => criarSimulacao({
+      carros: [
+        { id: 'A', rota: [1, 2] },
+        { id: 'B', rota: [1, 4] },
+      ],
+      modo: 'com-bloqueio',
+      estrategia: 'nenhuma',
+    }),
+    /Os carros A e B começam no mesmo quadrante \(Q1\)\./,
+  );
+});
+
+teste('personalizado rejeita quadrante repetido pela configuração do core', () => {
+  assert.throws(
+    () => criarSimulacao({ carros: [{ id: 'A', rota: [1, 2, 1] }], modo: 'com-bloqueio', estrategia: 'nenhuma' }),
+    /não pode repetir quadrantes/,
+  );
+});
+
 // ---------------------------------------------------------------- cenários aleatórios
 function aleatorio(semente) {
   let s = semente >>> 0;
@@ -144,8 +188,11 @@ function aleatorio(semente) {
 function configAleatoria(rand) {
   const n = 1 + Math.floor(rand() * 4);
   const carros = [];
+  const inicios = new Set();
   for (let i = 0; i < n; i++) {
-    const inicio = 1 + Math.floor(rand() * 4);
+    let inicio = 1 + Math.floor(rand() * 4);
+    while (inicios.has(inicio)) inicio = 1 + Math.floor(rand() * 4);
+    inicios.add(inicio);
     const sentido = rand() < 0.5 ? 1 : 3; // horário ou anti-horário
     const tamanho = 1 + Math.floor(rand() * 4);
     const rota = Array.from({ length: tamanho }, (_, k) => ((inicio - 1 + sentido * k) % 4) + 1);
