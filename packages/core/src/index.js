@@ -3,6 +3,8 @@
 
 import { normalizarConfig } from './config.js';
 import { avancar, criarInterno, LIMITE_RODADAS, paraEstado, todosConcluidos } from './motor.js';
+import { obterEstrategia } from './estrategias/index.js';
+import { aplicarRecuperacao } from './recuperacao.js';
 
 export { CENARIOS } from './cenarios.js';
 
@@ -19,8 +21,12 @@ export function criarSimulacao(config) {
   const empilhar = () => pilha.push(structuredClone(interno));
   const estado = () => paraEstado(interno);
 
+  const estrategia = obterEstrategia(cfg.estrategia);
+
+  // Com recuperação automática o deadlock não encerra a simulação: o próximo passo resolve.
   function finalizado() {
-    return todosConcluidos(interno) || interno.ciclo.length > 0 || interno.rodada >= LIMITE_RODADAS;
+    if (todosConcluidos(interno) || interno.rodada >= LIMITE_RODADAS) return true;
+    return interno.ciclo.length > 0 && !estrategia.autoRecuperar;
   }
 
   return {
@@ -28,7 +34,15 @@ export function criarSimulacao(config) {
     passo() {
       if (finalizado()) return estado();
       empilhar();
-      avancar(interno);
+      if (estrategia.autoRecuperar && interno.ciclo.length) aplicarRecuperacao(interno);
+      else avancar(interno);
+      return estado();
+    },
+    /** Recuperação manual: vale em qualquer estratégia, quando há deadlock. */
+    resolver() {
+      if (!interno.ciclo.length) return estado();
+      empilhar();
+      aplicarRecuperacao(interno);
       return estado();
     },
     voltar() {
@@ -42,5 +56,6 @@ export function criarSimulacao(config) {
     },
     finalizado,
     podeVoltar: () => pilha.length > 0,
+    podeResolver: () => interno.ciclo.length > 0,
   };
 }

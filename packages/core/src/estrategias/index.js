@@ -1,6 +1,7 @@
 import { nenhuma } from './nenhuma.js';
+import { recuperacao } from './recuperacao.js';
 
-const REGISTRO = { nenhuma };
+const REGISTRO = { nenhuma, recuperacao };
 
 export function obterEstrategia(nome) {
   const estrategia = REGISTRO[nome];
