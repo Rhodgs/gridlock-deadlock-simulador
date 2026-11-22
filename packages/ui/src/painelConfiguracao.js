@@ -1,16 +1,20 @@
 import { el } from './dom.js';
 import { criarJanela } from './janela.js';
+import { MODOS, ESTRATEGIAS } from '../../contrato/index.js';
 
-const MODOS = [
-  ['normal', 'Normal (um carro chega por rodada)'],
-  ['com-bloqueio', 'Com bloqueio (todos chegam juntos)'],
-];
-const ESTRATEGIAS = [
-  ['nenhuma', 'Nenhuma'],
-  ['prevencao', 'Prevenção'],
-  ['evitacao', 'Evitação'],
-  ['recuperacao', 'Detecção + recuperação'],
-];
+const ROTULOS_MODOS = {
+  normal: 'Normal (um carro chega por rodada)',
+  'com-bloqueio': 'Com bloqueio (todos chegam juntos)',
+};
+const ROTULOS_ESTRATEGIAS = {
+  nenhuma: 'Nenhuma',
+  prevencao: 'Prevenção',
+  evitacao: 'Evitação',
+  recuperacao: 'Detecção + recuperação',
+};
+
+const OPCOES_MODOS = MODOS.map((valor) => [valor, ROTULOS_MODOS[valor]]);
+const OPCOES_ESTRATEGIAS = ESTRATEGIAS.map((valor) => [valor, ROTULOS_ESTRATEGIAS[valor]]);
 
 function seletor(rotulo, opcoes, atual, travado, onChange) {
   return el(
@@ -54,8 +58,8 @@ export function criarPainelConfiguracao({ cenarios, cenarioAtual, descricao, mod
     'Configuração',
     [
       botoes,
-      seletor('Modo', MODOS, modo, travado, onModo),
-      seletor('Estratégia', ESTRATEGIAS, estrategia, travado, onEstrategia),
+      seletor('Modo', OPCOES_MODOS, modo, travado, onModo),
+      seletor('Estratégia', OPCOES_ESTRATEGIAS, estrategia, travado, onEstrategia),
       descricao ? el('p', { class: 'nota' }, descricao) : null,
       el('p', { class: 'nota' }, travado ? 'Reinicie para mudar a configuração.' : 'Mudar o modo ou a estratégia reinicia a simulação.'),
     ],
