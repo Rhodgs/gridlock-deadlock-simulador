@@ -1,4 +1,4 @@
-cenario,modo,estrategia,deadlock,rodadaDeadlock,terminou,rodadas,tempoMedioEspera,concluidos,vetos
+cenario,modo,estrategia,deadlock,rodadaDeadlock,terminou,rodadas,tempoMedioEspera,concluidos,pedidosBloqueados
 Deadlock clássico,normal,nenhuma,não,-,sim,8,1,4/4,4
 Deadlock clássico,normal,nenhuma + resolver,não,-,sim,8,1,4/4,4
 Deadlock clássico,normal,recuperacao,não,-,sim,8,1,4/4,4
@@ -29,3 +29,9 @@ Sem deadlock,com-bloqueio,nenhuma + resolver,não,-,sim,3,0,2/2,0
 Sem deadlock,com-bloqueio,recuperacao,não,-,sim,3,0,2/2,0
 Sem deadlock,com-bloqueio,prevencao,não,-,sim,3,0,2/2,0
 Sem deadlock,com-bloqueio,evitacao,não,-,sim,3,0,2/2,0
+
+estrategia,deadlockPercentual,terminouPercentual,cenariosTerminados,mediaRodadas,mediaTempoMedioEspera,vezesRecuperacaoAcionada
+nenhuma,47.0%,53.0%,318,7.40,0.99,-
+recuperacao,47.0%,100.0%,600,9.38,1.66,435
+prevencao,0.0%,100.0%,600,11.18,2.98,-
+evitacao,0.0%,100.0%,600,8.87,1.69,-

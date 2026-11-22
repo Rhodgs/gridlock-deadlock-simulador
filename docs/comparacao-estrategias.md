@@ -2,11 +2,11 @@
 
 Data: 2026-11-22  
 Semente: 2026  
-Cenários aleatórios: 300
+Cenários aleatórios: 600
 
 ## Cenários fixos
 
-| cenário | modo | estratégia | deadlock | rodadaDeadlock | terminou | rodadas | tempoMedioEspera | concluidos | vetos |
+| cenário | modo | estratégia | deadlock | rodadaDeadlock | terminou | rodadas | tempoMedioEspera | concluidos | pedidos bloqueados |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Deadlock clássico | normal | nenhuma | não | - | sim | 8 | 1 | 4/4 | 4 |
 | Deadlock clássico | normal | nenhuma + resolver | não | - | sim | 8 | 1 | 4/4 | 4 |
@@ -41,11 +41,11 @@ Cenários aleatórios: 300
 
 ## Cenários aleatórios
 
-| estratégia | deadlockPercentual | terminouPercentual | mediaRodadas | mediaTempoMedioEspera |
-| --- | --- | --- | --- | --- |
-| nenhuma | 16.0% | 84.0% | 5.30 | 0.76 |
-| recuperacao | 16.0% | 100.0% | 6.67 | 0.88 |
-| prevencao | 0.0% | 100.0% | 7.80 | 1.55 |
-| evitacao | 0.0% | 100.0% | 6.55 | 0.92 |
+| estratégia | deadlockPercentual | terminouPercentual | cenários que terminaram (n) | mediaRodadas | mediaTempoMedioEspera | vezes que recuperação foi acionada |
+| --- | --- | --- | --- | --- | --- | --- |
+| nenhuma | 47.0% | 53.0% | 318 | 7.40 | 0.99 | - |
+| recuperacao | 47.0% | 100.0% | 600 | 9.38 | 1.66 | 435 |
+| prevencao | 0.0% | 100.0% | 600 | 11.18 | 2.98 | - |
+| evitacao | 0.0% | 100.0% | 600 | 8.87 | 1.69 | - |
 
-Nenhuma estratégia: 48 de 300 cenários aleatórios travam em deadlock.
+Nenhuma estratégia: 282 de 600 cenários aleatórios travam em deadlock.
