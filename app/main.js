@@ -9,9 +9,37 @@ import {
 import { animarCarros, limparPoses } from './animacao.js';
 
 const INTERVALO_BASE_MS = 1300;
+const CHAVE_PERSONALIZADO = 'gridlock:personalizado:v1';
 
 const $ = (id) => document.getElementById(id);
-const app = { cenario: CENARIOS[0], sim: null, rodando: false, timer: null, velocidade: 1, modo: 'normal', estrategia: 'nenhuma' };
+let personalizadoSalvo = null;
+try {
+  personalizadoSalvo = JSON.parse(localStorage.getItem(CHAVE_PERSONALIZADO));
+} catch { /* sem localStorage: começa sem cenário salvo */ }
+
+const personalizadoPadrao = {
+  id: 'personalizado',
+  nome: 'Personalizado',
+  descricao: 'Cenário personalizado.',
+  modo: 'com-bloqueio',
+  estrategia: 'nenhuma',
+  carros: [
+    { id: 'A', rota: [1, 2] },
+    { id: 'D', rota: [2, 3] },
+    { id: 'B', rota: [3, 4] },
+    { id: 'C', rota: [4, 1] },
+  ],
+};
+const app = {
+  cenario: CENARIOS[0],
+  personalizado: personalizadoSalvo ?? personalizadoPadrao,
+  sim: null,
+  rodando: false,
+  timer: null,
+  velocidade: 1,
+  modo: 'normal',
+  estrategia: 'nenhuma',
+};
 
 const barra = criarBarraControle({
   onAlternar: () => (app.rodando ? pausar() : iniciar()),
@@ -72,6 +100,28 @@ function escolherCenario(id) {
   novaSimulacao();
 }
 
+function aplicarPersonalizado(cenario) {
+  pararTimer();
+  app.rodando = false;
+  try {
+    criarSimulacao({ carros: cenario.carros, modo: app.modo, estrategia: app.estrategia });
+  } catch (erro) {
+    return { erro: erro.message };
+  }
+
+  app.personalizado = {
+    ...cenario,
+    modo: app.modo,
+    estrategia: app.estrategia,
+  };
+  try {
+    localStorage.setItem(CHAVE_PERSONALIZADO, JSON.stringify(app.personalizado));
+  } catch { /* sem localStorage: mantém o cenário nesta sessão */ }
+  app.cenario = app.personalizado;
+  novaSimulacao();
+  return { ok: true };
+}
+
 function exportarLog() {
   const linhas = app.sim.estado().eventos.map((e) => `R${e.rodada} [${e.tipo}] ${e.texto}`);
   const url = URL.createObjectURL(new Blob([linhas.join('\n') + '\n'], { type: 'text/plain' }));
@@ -91,6 +141,8 @@ function renderizar() {
     onCenario: escolherCenario,
     onModo: (v) => { app.modo = v; novaSimulacao(); },
     onEstrategia: (v) => { app.estrategia = v; novaSimulacao(); },
+    personalizadoSalvo: app.personalizado,
+    onAplicarPersonalizado: aplicarPersonalizado,
   }));
   $('palco').replaceChildren(criarCruzamento(estado), criarLegenda());
   animarCarros($('palco'), (INTERVALO_BASE_MS / app.velocidade) * 0.7);

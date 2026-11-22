@@ -3,13 +3,13 @@
 // setas do teclado (com o divisor focado) para ajustar de 20 em 20 px.
 // Os tamanhos ficam salvos no navegador (localStorage).
 
-const CHAVE = 'gridlock:layout:v1';
+const CHAVE = 'gridlock:layout:v2';
 const raiz = document.documentElement;
 
 const LIMITES = {
     '--col-esq': { min: 200, max: 480, padrao: 260 },
     '--col-dir': { min: 240, max: 560, padrao: 340 },
-    '--rodape-h': { min: 120, max: 520, padrao: 240 },
+    '--rodape-h': { min: 120, max: 520, padrao: 170 },
 };
 
 function lerSalvo() {
