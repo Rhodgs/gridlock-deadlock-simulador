@@ -29,8 +29,14 @@ const RAD = Math.PI / 180;
 const diferenca = (de, para) => ((((para - de) % 360) + 540) % 360) - 180; // (-180, 180]
 const suave = (t) => t * t * (3 - 2 * t);
 const arred = (n) => Math.round(n * 1000) / 1000;
-const escrever = (g, x, y, r) =>
+const escrever = (g, x, y, r) => {
   g.setAttribute('transform', `translate(${arred(x)} ${arred(y)}) rotate(${arred(r)})`);
+  g.querySelector('.carro-letra')?.setAttribute('transform', `rotate(${arred(-r)})`);
+  g.querySelector('.selo')?.setAttribute(
+    'transform',
+    `translate(20 -26) rotate(${arred(-r)})`,
+  );
+};
 
 // vetor unitário para onde o carro aponta, dado o ângulo r do atributo
 const frente = (r) => {
