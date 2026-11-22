@@ -24,6 +24,18 @@
 .janela-botoes i:nth-child(2) { background: #fff; }
 .janela-botoes i:nth-child(3) { background: var(--janela); }
 .janela-corpo { padding: .7rem; display: grid; gap: .8rem; }
+.dialogo-personalizado { width: min(520px, calc(100vw - 32px)); max-height: calc(100vh - 32px); border: var(--borda); box-shadow: var(--sombra); background: var(--janela); color: var(--tinta); padding: 0; }
+.dialogo-personalizado::backdrop { background: rgba(20, 33, 61, .55); }
+.form-personalizado { display: grid; gap: .55rem; padding: .75rem; }
+.form-personalizado h3 { margin: 0; font: 400 1.25rem var(--titulo); }
+.erros-personalizado { min-height: 1.2rem; margin: 0; color: var(--vermelho); font-size: .82rem; font-weight: 800; }
+.rotas-personalizado { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; max-height: 360px; overflow: auto; }
+.rota-carro { min-width: 0; margin: 0; border: 2px solid var(--tinta); padding: .35rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .35rem; }
+.rota-carro legend { font-weight: 800; }
+.campo-rota { display: grid; gap: .15rem; font-size: .78rem; }
+.campo-rota select { width: 100%; min-width: 0; }
+.campo-quantidade { width: 220px; }
+.acoes-personalizado { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .45rem; }
 details.janela > summary { list-style: none; cursor: pointer; }
 details.janela > summary::-webkit-details-marker { display: none; }
 details.janela > summary::marker { content: ''; }
