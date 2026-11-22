@@ -141,7 +141,7 @@ export function animarCarros(raiz, duracaoMs = 900) {
     const pose = criarTrajeto(velha, nova);
     const p0 = pose(0);
     escrever(g, p0.x, p0.y, p0.r); // começa na posição antiga, sem piscar no destino
-    ativos.push({ g, pose, nova });
+    ativos.push({ id, g, pose, nova });
   });
 
   if (!ativos.length) return;
@@ -158,9 +158,11 @@ export function animarCarros(raiz, duracaoMs = 900) {
       if (!a.g.isConnected) continue;
       if (t >= 1) {
         escrever(a.g, a.nova.x, a.nova.y, a.nova.r); // pose exata ao final
+        poseAnterior.set(a.id, { x: a.nova.x, y: a.nova.y, r: a.nova.r });
       } else {
         const p = a.pose(t);
         escrever(a.g, p.x, p.y, p.r);
+        poseAnterior.set(a.id, { x: p.x, y: p.y, r: p.r });
       }
     }
     if (t < 1) requestAnimationFrame(quadro);
