@@ -17,6 +17,6 @@ body { background: var(--mesa); color: var(--tinta); font: 400 1rem/1.4 var(--co
 
 .palco { min-width: 0; }
 .lateral { display: grid; gap: 1.1rem; }
-#config { position: sticky; top: .75rem; }
+#config { position: sticky; top: .75rem; min-width: 0; }
 
 .erro { margin: 1rem; padding: 1rem; background: #fee2e2; border: var(--borda); font-weight: 600; }
