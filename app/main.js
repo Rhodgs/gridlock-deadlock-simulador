@@ -31,6 +31,7 @@ function pararTimer() { clearInterval(app.timer); app.timer = null; }
 function iniciar() {
   if (app.sim.finalizado()) return;
   app.rodando = true;
+  pararTimer();
   ligarTimer();
   renderizar();
 }
