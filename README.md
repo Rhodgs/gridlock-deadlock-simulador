@@ -23,10 +23,10 @@ gridlock-deadlock-simulador/
 ├── packages/
 │   ├── contrato/        ← constantes e validador do estado
 │   ├── ui/              ← componentes visuais reutilizáveis (só desenham)
-│   └── core/            ← backend: motor, detecção, estratégias (a implementar)
-├── app/                 ← página que junta ui + (mocks | core)
-├── mocks/               ← estados de exemplo em JSON (a UI funciona sem o backend)
-├── tools/               ← scripts (gerar e validar mocks)
+│   └── core/            ← backend: motor, detecção, estratégias
+├── app/                 ← página que junta ui + core
+├── mocks/               ← estados de exemplo em JSON (referência do contrato)
+├── tools/               ← scripts (testes do core, gerar e validar mocks)
 └── docs/                ← prints, relatório, slides
 ```
 
@@ -52,18 +52,30 @@ python3 -m http.server 5173
 | Comando | O que faz |
 |---|---|
 | `npm start` | serve o projeto localmente |
+| `npm test` | testes do backend (cenários fixos + 600 sorteados) |
 | `npm run mocks` | regenera os JSON de `mocks/` |
 | `npm run validar` | valida os mocks contra o contrato |
+
+## Estratégias
+
+| Estratégia | O que faz | Condição de deadlock atacada |
+|---|---|---|
+| nenhuma | deixa o deadlock acontecer | — |
+| prevenção | só entra se toda a rota estiver livre e reserva tudo de uma vez | posse e espera |
+| evitação | só atende o pedido se o estado resultante for seguro | (evita chegar ao ciclo) |
+| recuperação | detecta o ciclo e faz um carro (vítima) recuar | (corrige depois) |
 
 ## Status
 
 - [x] Contrato do estado
-- [x] Mocks (clássico, quase-deadlock, sem deadlock)
+- [x] Mocks (referência do contrato)
 - [x] Interface (cruzamento, painéis, controles, log)
-- [ ] Backend (`packages/core`)
-- [ ] Integração `app` ↔ `core`
-- [ ] Estratégias: prevenção, evitação, recuperação
-- [ ] Relatório da 2ª etapa
+- [x] Backend: motor de rodadas, detecção por grafo de espera, voltar
+- [x] Estratégias: prevenção, evitação e recuperação
+- [x] Integração `app` ↔ `core` e testes automáticos
+- [ ] Cenário personalizado (formulário)
+- [ ] Animação dos carros, semáforos, modo comparação
+- [ ] Avaliação com métricas por estratégia e relatório da 2ª etapa
 
 Veja [`CONTRIBUINDO.md`](CONTRIBUINDO.md) para branches, commits e divisão de tarefas.
 

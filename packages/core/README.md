@@ -1,24 +1,43 @@
 # packages/core — backend da simulação
 
-Aqui mora a lógica: motor de rodadas, detecção de deadlock e estratégias.
+Lógica da simulação: motor de rodadas, detecção de deadlock e estratégias.
 **Nada neste pacote mexe em tela** e ele **não importa `packages/ui`**.
+A saída é sempre o estado do [`CONTRATO.md`](../../CONTRATO.md).
 
-O que entregar: `criarSimulacao(config)` devolvendo `{ estado, passo, reiniciar, resolver }`,
-sempre no formato do [`CONTRATO.md`](../../CONTRATO.md).
+## Arquivos
 
-## Checklist
+| Arquivo | O que faz |
+|---|---|
+| `src/index.js` | `criarSimulacao()` (API pública) e `CENARIOS` |
+| `src/config.js` | valida e normaliza a configuração |
+| `src/motor.js` | rodadas: planeja (quem pede o quê), executa e monta o estado |
+| `src/deteccao.js` | grafo de espera e busca do ciclo |
+| `src/recuperacao.js` | escolhe a vítima e aplica a recuperação |
+| `src/seguranca.js` | teste de estado seguro (usado pela evitação) |
+| `src/estrategias/` | uma pasta-registro: `nenhuma`, `prevencao`, `evitacao`, `recuperacao` |
+| `src/cenarios.js` | cenários prontos |
 
-- [ ] Modelo: quadrantes, carros com **rota** (lista de quadrantes), rodadas
-- [ ] Avaliar todos os pedidos no **início** da rodada e só então aplicar os movimentos
-      (o resultado não pode depender da ordem em que os carros são percorridos)
-- [ ] Detecção por grafo de espera + DFS (`src/deteccao.js`)
-- [ ] Preencher `condicoes`, `eventos` (acumulado), `resultado` e `metricas`
-- [ ] Estratégia **prevenção** (reservar a rota inteira ou ordenar os quadrantes)
-- [ ] Estratégia **evitação** (só entrar se existir sequência segura)
-- [ ] Estratégia **recuperação** (escolher vítima, recuar, liberar quadrante) → `resolver()`
-- [ ] Testes: cenários dos `mocks/` devem produzir os mesmos estados
+## Como uma rodada funciona
 
-## Dica
+1. O estado mostra o **plano**: cada carro pede o próximo quadrante; seta verde = será atendido,
+   vermelha = fica parado (`motivo`: `ocupado` ou `negado`).
+2. Os pedidos são avaliados sobre a "foto" do início da rodada, **em ordem de prioridade**
+   (ordem da lista de carros). Um quadrante liberado agora só vale na rodada seguinte.
+3. `passo()` executa o plano e planeja a rodada seguinte. Se há ciclo no grafo de espera,
+   o deadlock é detectado.
 
-`validarEstado(estado)` (em `packages/contrato`) devolve a lista de inconsistências.
-Compare a saída do seu motor com os mocks e com esse validador a cada rodada.
+## Modos
+
+- `com-bloqueio`: todos os carros chegam na rodada 0 (pior caso).
+- `normal`: um carro chega por rodada, na ordem da lista (ou use `chegada` em cada carro).
+
+## Criar uma estratégia nova
+
+Crie `src/estrategias/minha.js` exportando um objeto com os campos de `nenhuma.js`
+(`reservaRota`, `autoRecuperar`, `quadrantesDeEntrada`, `vetar`, `mensagemVeto`) e registre em
+`src/estrategias/index.js`. Rode `npm test`.
+
+## Testes
+
+`npm test` confere cenários fixos e 600 cenários sorteados: todo estado precisa passar no
+`validarEstado()`, prevenção e evitação nunca podem deixar deadlock e todos os carros têm de concluir.
