@@ -24,10 +24,12 @@ const RODAS = [
  */
 export function criarCarro({ id, cor, estado = 'movimento', x = 0, y = 0, direcao = 'N', descricao }) {
   const p = paletaDoCarro(id, cor);
+  const direcaoGraus = GRAUS[direcao] ?? 0;
+  const contraRotacao = -direcaoGraus;
 
   const corpo = svg(
     'g',
-    { class: 'carro-corpo', transform: `rotate(${GRAUS[direcao] ?? 0})` },
+    { class: 'carro-corpo' },
     ...RODAS.map(([rx, ry]) => svg('rect', { x: rx, y: ry, width: 5, height: 12, rx: 1.5, fill: '#14213d' })),
     svg('rect', { class: 'carro-chassi', x: -18, y: -32, width: 36, height: 64, rx: 10, fill: p.fill, stroke: p.borda, 'stroke-width': 2.5 }),
     svg('rect', { x: -13, y: -21, width: 26, height: 11, rx: 3, fill: p.vidro }),
@@ -36,25 +38,25 @@ export function criarCarro({ id, cor, estado = 'movimento', x = 0, y = 0, direca
 
   const letra = svg(
     'text',
-    { class: 'carro-letra', x: 0, y: 7, 'text-anchor': 'middle', fill: '#fff', stroke: p.borda, 'stroke-width': 3.5 },
+    { class: 'carro-letra', x: 0, y: 7, 'text-anchor': 'middle', fill: '#fff', stroke: p.borda, 'stroke-width': 3.5, transform: `rotate(${contraRotacao})` },
     id,
   );
 
-  const selo = criarSelo(estado);
+  const selo = criarSelo(estado, contraRotacao);
 
   return svg(
     'g',
-    { class: `carro estado-${estado}`, transform: `translate(${x} ${y}) rotate(${GRAUS[direcao] ?? 0})`, 'data-carro': id },
+    { class: `carro estado-${estado}`, transform: `translate(${x} ${y}) rotate(${direcaoGraus})`, 'data-carro': id },
     svg('title', null, descricao ?? `Carro ${id}: ${ROTULO_ESTADO[estado] ?? estado}`),
     svg('g', { class: 'carro-anim' }, corpo, letra, selo),
   );
 }
 
-function criarSelo(estado) {
+function criarSelo(estado, contraRotacao = 0) {
   if (estado === 'bloqueado') {
     return svg(
       'g',
-      { class: 'selo selo-bloqueado', transform: 'translate(20 -26)' },
+      { class: 'selo selo-bloqueado', transform: `translate(20 -26) rotate(${contraRotacao})` },
       svg('circle', { r: 10, fill: '#f97316', stroke: '#fff', 'stroke-width': 2 }),
       svg('rect', { x: -4.5, y: -5, width: 3, height: 10, fill: '#fff' }),
       svg('rect', { x: 1.5, y: -5, width: 3, height: 10, fill: '#fff' }),
@@ -63,7 +65,7 @@ function criarSelo(estado) {
   if (estado === 'concluido') {
     return svg(
       'g',
-      { class: 'selo selo-concluido', transform: 'translate(20 -26)' },
+      { class: 'selo selo-concluido', transform: `translate(20 -26) rotate(${contraRotacao})` },
       svg('circle', { r: 10, fill: '#16a34a', stroke: '#fff', 'stroke-width': 2 }),
       svg('path', { d: 'M-4.5 0.5 L-1.5 3.5 L4.5 -3', fill: 'none', stroke: '#fff', 'stroke-width': 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }),
     );
