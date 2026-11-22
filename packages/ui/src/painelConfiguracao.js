@@ -2,8 +2,8 @@ import { el } from './dom.js';
 import { criarJanela } from './janela.js';
 
 const MODOS = [
-  ['normal', 'Normal'],
-  ['com-bloqueio', 'Com possibilidade de bloqueio'],
+  ['normal', 'Normal (um carro chega por rodada)'],
+  ['com-bloqueio', 'Com bloqueio (todos chegam juntos)'],
 ];
 const ESTRATEGIAS = [
   ['nenhuma', 'Nenhuma'],
@@ -27,10 +27,10 @@ function seletor(rotulo, opcoes, atual, travado, onChange) {
 
 /**
  * Painel da esquerda. Trava (fica cinza) quando a simulação já começou.
- * @param {{cenarios:{id:string,nome:string}[], cenarioAtual:string, modo:string, estrategia:string,
+ * @param {{cenarios:{id:string,nome:string}[], cenarioAtual:string, descricao?:string, modo:string, estrategia:string,
  *          travado:boolean, onCenario:Function, onModo:Function, onEstrategia:Function}} p
  */
-export function criarPainelConfiguracao({ cenarios, cenarioAtual, modo, estrategia, travado, onCenario, onModo, onEstrategia }) {
+export function criarPainelConfiguracao({ cenarios, cenarioAtual, descricao, modo, estrategia, travado, onCenario, onModo, onEstrategia }) {
   const botoes = el(
     'div',
     { class: 'cenarios', role: 'group', 'aria-label': 'Cenários prontos' },
@@ -56,7 +56,8 @@ export function criarPainelConfiguracao({ cenarios, cenarioAtual, modo, estrateg
       botoes,
       seletor('Modo', MODOS, modo, travado, onModo),
       seletor('Estratégia', ESTRATEGIAS, estrategia, travado, onEstrategia),
-      el('p', { class: 'nota' }, travado ? 'Reinicie para mudar a configuração.' : 'Com os estados de exemplo, modo e estratégia ainda não alteram a simulação.'),
+      descricao ? el('p', { class: 'nota' }, descricao) : null,
+      el('p', { class: 'nota' }, travado ? 'Reinicie para mudar a configuração.' : 'Mudar o modo ou a estratégia reinicia a simulação.'),
     ],
     { classe: 'janela-config' },
   );
