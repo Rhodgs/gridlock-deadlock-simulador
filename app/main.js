@@ -81,7 +81,7 @@ function reiniciar() {
 
 function resolver() {
   app.sim.resolver();
-  iniciar();
+  renderizar();
 }
 
 /** Cria uma simulação nova com o cenário, o modo e a estratégia escolhidos. */
